@@ -1,4 +1,9 @@
 <h1>Mail</h1>
+<nav>
+  <ul>
+    <li>{{#link-to 'index'}}Inbox {{#if model.length}}({{model.length}}){{/if}}{{/link-to}}</li>
+  </ul>
+</nav>
 
 <ul>
 {{#each model as |email|}}
