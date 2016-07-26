@@ -1,4 +1,10 @@
-<h2>{{model.subject}}</h2>
-<span>{{model.from}}</span>
-<span>{{model.sentAt}}</span>
-<p>{{model.body}}</p>
+<div class="mail-content">
+  <h2>{{model.subject}}</h2>
+  <hr/>
+  <div class="mail-header">
+    <div class="tile-icon">{{fa-icon "user"}}</div>
+    <span class="from-name">{{model.from}}</span>
+    <span class="sent-at">{{model.sentAt}}</span>
+  </div>
+  <p>{{model.body}}</p>
+</div>

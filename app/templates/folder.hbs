@@ -1,11 +1,26 @@
-<h1>Mail</h1>
-<nav>
-  <ul>
-    <li>
-      {{#link-to 'folder' 'inbox'}}
-        Inbox {{#if model.length}}({{model.length}}){{/if}}
-      {{/link-to}}
-    </li>
-  </ul>
-</nav>
-{{outlet}}
+<div class="container">
+  <div class="mail-box">
+    <aside class="sm-side">
+      <div class="user-head">
+      </div>
+      <div class="inbox-body">
+      </div>
+      <ul class="inbox-nav inbox-divider">
+        <li class="active">
+          {{#link-to 'folder' 'inbox'}}
+            {{fa-icon "inbox"}}
+            Inbox {{#if model.length}}({{model.length}}){{/if}}
+          {{/link-to}}
+        </li>
+      </ul>
+    </aside>
+    <aside class="lg-side">
+      <div class="inbox-head">
+        <h3>Mail</h3>
+      </div>
+      <div class="inbox-body">
+        {{outlet}}
+      </div>
+    </aside>
+  </div>
+</div>
