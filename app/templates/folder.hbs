@@ -1,0 +1,11 @@
+<h1>Mail</h1>
+<nav>
+  <ul>
+    <li>
+      {{#link-to 'folder' 'inbox'}}
+        Inbox {{#if model.length}}({{model.length}}){{/if}}
+      {{/link-to}}
+    </li>
+  </ul>
+</nav>
+{{outlet}}

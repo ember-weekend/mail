@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  beforeModel() {
-    this.replaceWith('folder', 'inbox');
+  model() {
+    return this.modelFor('folder');
   }
 });

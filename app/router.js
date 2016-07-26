@@ -6,6 +6,9 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('folder', { path: ':folderName' }, function() {
+    this.route('mail', { path: ':mailId' });
+  });
 });
 
 export default Router;
