@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import moment from 'moment';
 
 export default Ember.Route.extend({
   model() {
@@ -8,7 +9,7 @@ export default Ember.Route.extend({
       to: 'dev@me.com',
       subject: 'Opportunity',
       body: 'Dear {{firstName}}, ...',
-      sentAt: new Date(),
+      sentAt: moment(new Date()).subtract(2, 'minute').toDate(),
       readDate: null
     }, {
       id: 2,
@@ -16,7 +17,7 @@ export default Ember.Route.extend({
       to: 'dev@me.com',
       subject: 'You may like these ads',
       body: 'Some irrelevant ads',
-      sentAt: new Date(),
+      sentAt: moment(new Date()).subtract(1, 'day').toDate(),
       readDate: null
     }];
   }

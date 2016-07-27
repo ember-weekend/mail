@@ -4,7 +4,7 @@
     <tr class="{{if email.readDate 'read' 'unread' }}" {{action "showEmail" email}}>
         <td class="view-message dont-show">{{email.from}}</td>
         <td class="view-message">{{email.subject}}</td>
-        <td class="view-message text-right">{{email.sentAt}}</td>
+        <td class="view-message text-right">{{relative-date-formatter email.sentAt relative=false}}</td>
       </tr>
     {{/each}}
   </tbody>
