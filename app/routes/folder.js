@@ -8,14 +8,16 @@ export default Ember.Route.extend({
       to: 'dev@me.com',
       subject: 'Opportunity',
       body: 'Dear {{firstName}}, ...',
-      sentAt: new Date()
+      sentAt: new Date(),
+      readDate: null
     }, {
       id: 2,
       from: 'spam@twitter.com',
       to: 'dev@me.com',
       subject: 'You may like these ads',
       body: 'Some irrelevant ads',
-      sentAt: new Date()
+      sentAt: new Date(),
+      readDate: null
     }];
   }
 });

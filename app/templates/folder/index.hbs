@@ -1,7 +1,7 @@
 <table class="table table-inbox table-hover">
   <tbody>
     {{#each model as |email|}}
-      <tr class="unread" {{action "showEmail" email}}>
+    <tr class="{{if email.readDate 'read' 'unread' }}" {{action "showEmail" email}}>
         <td class="view-message dont-show">{{email.from}}</td>
         <td class="view-message">{{email.subject}}</td>
         <td class="view-message text-right">{{email.sentAt}}</td>
