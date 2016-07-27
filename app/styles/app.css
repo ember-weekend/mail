@@ -388,3 +388,9 @@ ul {
   display: inline-block;
   margin-right: 10px;
 }
+.options-line {
+  margin: 10px 0;
+}
+.subject-line {
+  margin: 10px 0;
+}
