@@ -6,12 +6,19 @@
       <div class="inbox-body">
       </div>
       <ul class="inbox-nav inbox-divider">
-        <li class="active">
+        {{#link-to 'folder' 'inbox' tagName="li"}}
           {{#link-to 'folder' 'inbox'}}
             {{fa-icon "inbox"}}
-            Inbox {{#if model.length}}({{model.length}}){{/if}}
+            Inbox {{#if inboxCount}}({{inboxCount}}){{/if}}
           {{/link-to}}
-        </li>
+        {{/link-to}}
+
+        {{#link-to 'folder' 'trash' tagName="li"}}
+          {{#link-to 'folder' 'trash'}}
+            {{fa-icon "trash"}}
+            Trash {{#if trashCount}}({{trashCount}}){{/if}}
+          {{/link-to}}
+        {{/link-to}}
       </ul>
     </aside>
     <aside class="lg-side">
