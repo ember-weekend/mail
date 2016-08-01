@@ -40,6 +40,8 @@ export default Ember.Service.extend({
         set(this, fn, result);
       }
 
+      set(this, 'currentFolderName', folderName);
+
       resolve(get(this, folderName));
     });
   }
