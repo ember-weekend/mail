@@ -197,6 +197,9 @@ ul.inbox-pagination li {
   margin-bottom: 10px;
   width: 100%;
 }
+.mail-option a .fa-star.inbox-started {
+  color: #f78a09;
+}
 .mail-option .chk-all, .mail-option .btn-group {
   margin-right: 5px;
 }

@@ -1,5 +1,15 @@
 <div class="mail-option">
   <div class="btn-group">
+    <a {{action (route-action 'starEmail' model)}} href="#" class="btn mini tooltips" aria-expanded="false">
+      {{#if model.starred}}
+        {{fa-icon "star" class="inbox-started"}}
+      {{else}}
+        {{fa-icon "star"}}
+      {{/if}}
+    </a>
+  </div>
+
+  <div class="btn-group">
     <a {{action (route-action 'moveToTrash' model)}} href="#" class="btn mini tooltips" aria-expanded="false">
       {{ fa-icon "trash" }}
     </a>

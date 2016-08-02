@@ -1,8 +1,9 @@
 import Ember from 'ember';
 
-const { set } = Ember;
+const { set, get } = Ember;
 
 export default Ember.Route.extend({
+  mailLookup: Ember.inject.service(),
   model({ mailId }) {
     return this.modelFor('folder')[mailId-1];
   },
@@ -16,6 +17,10 @@ export default Ember.Route.extend({
     moveToTrash(email) {
       set(email, 'trashedDate', new Date());
       this.transitionTo('application');
+    },
+    starEmail(email) {
+      set(email, 'starred', !get(email, 'starred'));
+      get(this, 'mailLookup').update();
     }
   }
 });
