@@ -5,7 +5,7 @@ const { set, get } = Ember;
 export default Ember.Route.extend({
   mailLookup: Ember.inject.service(),
   model({ mailId }) {
-    return this.modelFor('folder')[mailId-1];
+    return this.store.find('email', mailId);
   },
   afterModel(model) {
     set(model, 'readDate', new Date());
