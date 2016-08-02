@@ -15,7 +15,11 @@ export default Ember.Controller.extend({
         set(result, 'trashedDate', new Date());
         set(result, 'checked', false);
       });
-      this.transitionToRoute('application');
+      get(this, 'mailLookup').update();
+    },
+    starEmail(email) {
+      set(email, 'starred', !get(email, 'starred'));
+      get(this, 'mailLookup').update();
     }
   }
 });
