@@ -1,55 +1,44 @@
 import Ember from 'ember';
-import moment from 'moment';
 
-const fixtures = [{
-  id: 1,
-  from: 'recruiter@startup.com',
-  to: 'dev@me.com',
-  subject: 'Opportunity',
-  body: 'Dear {{firstName}}, ...',
-  sentAt: moment(new Date()).subtract(2, 'minute').toDate(),
-  readDate: null,
-  trashedDate: null,
-  starred: null
-}, {
-  id: 2,
-  from: 'spam@twitter.com',
-  to: 'dev@me.com',
-  subject: 'You may like these ads',
-  body: 'Some irrelevant ads',
-  sentAt: moment(new Date()).subtract(1, 'day').toDate(),
-  readDate: null,
-  trashedDate: null,
-  starred: null
-}];
-
-const { get, set } = Ember;
+const { get, set, setProperties } = Ember;
 
 export default Ember.Service.extend({
-  lookupFilters: {
-    inbox: i => !get(i, 'trashedDate'),
-    trash: i => get(i, 'trashedDate'),
-    starred: i => get(i, 'starred')
-  },
+  store: Ember.inject.service(),
+  currentFolder: Ember.computed('currentFolderName', function() {
+    return get(this, get(this, 'currentFolderName'));
+  }),
   update() {
     return this.retrieve(get(this, 'currentFolderName'));
   },
   retrieve(folderName) {
-    return new Ember.RSVP.Promise((resolve) => {
-      const lookupFilters = get(this, 'lookupFilters');
-
-      for(var fn in lookupFilters) {
-        const filter = lookupFilters[fn];
-        const result = fixtures.filter(filter);
-
-        set(this, `${fn}Count`, result.length);
-        set(this, fn, result);
-      }
-
+    return get(this, 'store').query('email', { folderName }).then((emails) => {
+      setProperties(this, get(emails, 'meta'));
+      set(this, folderName, emails);
       set(this, 'currentFolderName', folderName);
 
-      resolve(get(this, folderName));
+      return emails;
     });
+  },
+  addTag(tag, email) {
+    set(email, tag, !get(email, tag));
+
+    email.save().then((email) => {
+      setProperties(this, get(email, 'meta'));
+    });
+  },
+  removeItems(items) {
+    const currentFolder = get(this, 'currentFolder');
+
+    items.forEach(item => {
+      set(item, 'trashedDate', new Date());
+      set(item, 'checked', false);
+
+      item.save().then((email) => {
+        setProperties(this, get(email, 'meta'));
+        currentFolder.removeObject(item);
+      });
+    });
+
   }
 
 });
