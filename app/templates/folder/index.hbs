@@ -17,6 +17,8 @@
 
 <table class="table table-inbox table-hover">
   <tbody>
+    {{ log (get mailLookup mailLookup.currentFolderName) }}
+    {{ log mailLookup.currentFolderName }}
     {{#each (get mailLookup mailLookup.currentFolderName) as |email|}}
     <tr class="{{if email.readDate 'read' 'unread' }}" >
         <td class="inbox-small-cells">

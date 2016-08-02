@@ -14,8 +14,8 @@ export default Ember.Controller.extend({
       results.forEach(result => {
         set(result, 'trashedDate', new Date());
         set(result, 'checked', false);
+        result.save();
       });
-      get(this, 'mailLookup').update();
     },
     starEmail(email) {
       set(email, 'starred', !get(email, 'starred'));
