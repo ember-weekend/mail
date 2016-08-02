@@ -9,7 +9,8 @@ const fixtures = [{
   body: 'Dear {{firstName}}, ...',
   sentAt: moment(new Date()).subtract(2, 'minute').toDate(),
   readDate: null,
-  trashedDate: null
+  trashedDate: null,
+  starred: null
 }, {
   id: 2,
   from: 'spam@twitter.com',
@@ -18,7 +19,8 @@ const fixtures = [{
   body: 'Some irrelevant ads',
   sentAt: moment(new Date()).subtract(1, 'day').toDate(),
   readDate: null,
-  trashedDate: null
+  trashedDate: null,
+  starred: null
 }];
 
 const { get, set } = Ember;
@@ -27,6 +29,10 @@ export default Ember.Service.extend({
   lookupFilters: {
     inbox: i => !get(i, 'trashedDate'),
     trash: i => get(i, 'trashedDate'),
+    starred: i => get(i, 'starred')
+  },
+  update() {
+    return this.retrieve(get(this, 'currentFolderName'));
   },
   retrieve(folderName) {
     return new Ember.RSVP.Promise((resolve) => {
