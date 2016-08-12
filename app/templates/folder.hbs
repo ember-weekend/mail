@@ -4,6 +4,9 @@
       <div class="user-head">
       </div>
       <div class="inbox-body">
+        <a href="#myModal" title="Compose" {{ action (route-action "toggleCompose") }}class="btn btn-compose">
+          Compose
+        </a>
       </div>
       <ul class="inbox-nav inbox-divider">
         {{#link-to 'folder' 'inbox' tagName="li"}}

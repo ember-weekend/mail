@@ -1,0 +1,10 @@
+{{ outlet }}
+
+{{#if composer.modalOpen}}
+  {{#modal-dialog
+    attachment='top right'
+    close=(route-action "toggleCompose")
+  }}
+    {{ compose-form close=(route-action "toggleCompose")}}
+  {{/modal-dialog}}
+{{/if}}
