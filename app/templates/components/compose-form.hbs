@@ -1,0 +1,36 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button aria-hidden="true" {{ action attrs.close }} class="close" type="button">×</button>
+      <h4 class="modal-title">Compose</h4>
+    </div>
+    <div class="modal-body">
+      <form role="form" class="form-horizontal" {{action "submitForm" form}}>
+        <div class="form-group">
+          <label class="col-lg-2 control-label">To</label>
+          <div class="col-lg-10">
+            {{input type="text" class="form-control" value=form.email_address}}
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-2 control-label">Subject</label>
+          <div class="col-lg-10">
+            {{input type="text" class="form-control" value=form.subject}}
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-2 control-label">Message</label>
+          <div class="col-lg-10">
+            {{textarea rows="10" cols="30" class="form-control" value=form.message}}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-lg-offset-2 col-lg-10">
+            <button class="btn btn-send" type="submit">Send</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
