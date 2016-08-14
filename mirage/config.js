@@ -34,6 +34,20 @@ export default function() {
     return json;
   });
 
+  this.post('/emails', function({emails}, request) {
+    const id = request.params.id;
+    const attrs = this.normalizedRequestAttrs();
+
+    const json = this.serialize(emails.create(attrs));
+    const [meta,] = getEmailMetaCounts(emails);
+
+    // workaround because  `item.save()` returns an item that can't query its
+    // requests' meta information
+    json.data.attributes.meta = meta;
+
+    return json;
+  });
+
   this.get('/emails', function({emails}, request) {
     const folderName = request.queryParams.folderName;
 

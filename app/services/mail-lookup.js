@@ -39,6 +39,8 @@ export default Ember.Service.extend({
       });
     });
 
+  },
+  setMeta(meta) {
+    setProperties(this, meta);
   }
-
 });

@@ -8,6 +8,10 @@ export default Ember.Route.extend({
     toggleCompose() {
       const composer = get(this, 'composer')
       composer.toggleProperty('modalOpen');
+    },
+    sendEmail() {
+      const composer = get(this, 'composer');
+      return composer.sendEmail();
     }
   }
 });

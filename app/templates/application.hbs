@@ -5,6 +5,6 @@
     attachment='top right'
     close=(route-action "toggleCompose")
   }}
-    {{ compose-form close=(route-action "toggleCompose")}}
+    {{ compose-form sendEmail=(route-action 'sendEmail') close=(route-action "toggleCompose")}}
   {{/modal-dialog}}
 {{/if}}
