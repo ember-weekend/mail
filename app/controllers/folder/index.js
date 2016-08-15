@@ -1,20 +1,27 @@
 import Ember from 'ember';
 
-const { get } = Ember;
+const { get, set } = Ember;
 
 export default Ember.Controller.extend({
   mailLookup: Ember.inject.service(),
-  currentFolderName: Ember.computed.alias('mailLookup.currentFolderName'),
+  tagging: Ember.inject.service(),
+
+  folderName: Ember.computed.alias('model.folderName'),
+
+  mail: Ember.computed('model.folderName', 'mailLookup.mail.@each.tags', function() {
+    return this.get('mailLookup').mailForFolder(this.get('model.folderName'));
+  }),
+
   actions: {
     showEmail(email) {
       this.transitionToRoute('folder.mail', email);
     },
-    trashBulk() {
-      const results = get(this, 'model').filter(i => get(i, 'checked'));
-      get(this, 'mailLookup').removeItems(results);
+    trashSelected() {
+      const mail = get(this, 'mail');
+      const checked = mail.filter(m => get(m, 'checked'));
+      return get(this, 'tagging').addTagAll(checked, 'trashed').then(() => {
+        checked.forEach((m) => set(m, 'checked', false));
+      });
     },
-    starEmail(email) {
-      get(this, 'mailLookup').addTag('starred', email);
-    }
   }
 });

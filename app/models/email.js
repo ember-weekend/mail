@@ -1,6 +1,9 @@
+import Ember from 'ember';
 import DS from 'ember-data';
 
+const { get } = Ember;
 const { attr } = DS;
+
 export default DS.Model.extend({
   from: attr(),
   to: attr(),
@@ -8,7 +11,12 @@ export default DS.Model.extend({
   body: attr(),
   sentAt: attr('date'),
   readDate: attr('date'),
-  trashedDate: attr('date'),
-  starred: attr('boolean'),
-  meta: attr()
+  meta: attr(),
+  tags: attr({ defaultValue: () => [] }),
+  starred: Ember.computed('tags.[]', function() {
+    return get(this, 'tags').contains('starred');
+  }),
+  trashed: Ember.computed('tags.[]', function() {
+    return get(this, 'tags').contains('trashed');
+  }),
 });

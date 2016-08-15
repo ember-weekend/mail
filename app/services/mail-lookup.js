@@ -1,44 +1,32 @@
 import Ember from 'ember';
 
-const { get, set, setProperties } = Ember;
+const { get } = Ember;
 
 export default Ember.Service.extend({
   store: Ember.inject.service(),
-  currentFolder: Ember.computed('currentFolderName', function() {
-    return get(this, get(this, 'currentFolderName'));
+  mailCounts: Ember.inject.service(),
+  tagging: Ember.inject.service(),
+
+  fetch(folderName) {
+    return get(this, 'store').query('email', {
+      folderName
+    }).then((mail) => {
+      get(this, 'mailCounts').extractMeta(mail);
+      return mail;
+    });
+  },
+
+  mail: Ember.computed('store.email.@each', function() {
+    return get(this, 'store').peekAll('email');
   }),
-  update() {
-    return this.retrieve(get(this, 'currentFolderName'));
+
+  mailForFolder(folderName) {
+    const mail = get(this, 'mail');
+    const tagging = get(this, 'tagging');
+    return {
+      inbox: () => tagging.filterByTags(mail, { exclude: ['trashed'] }),
+      trash: () => tagging.filterByTags(mail, { include: ['trashed'] }),
+      starred: () => tagging.filterByTags(mail, { include: ['starred'] }),
+    }[folderName]();
   },
-  retrieve(folderName) {
-    return get(this, 'store').query('email', { folderName }).then((emails) => {
-      setProperties(this, get(emails, 'meta'));
-      set(this, folderName, emails);
-      set(this, 'currentFolderName', folderName);
-
-      return emails;
-    });
-  },
-  addTag(tag, email) {
-    set(email, tag, !get(email, tag));
-
-    email.save().then((email) => {
-      setProperties(this, get(email, 'meta'));
-    });
-  },
-  removeItems(items) {
-    const currentFolder = get(this, 'currentFolder');
-
-    items.forEach(item => {
-      set(item, 'trashedDate', new Date());
-      set(item, 'checked', false);
-
-      item.save().then((email) => {
-        setProperties(this, get(email, 'meta'));
-        currentFolder.removeObject(item);
-      });
-    });
-
-  }
-
 });

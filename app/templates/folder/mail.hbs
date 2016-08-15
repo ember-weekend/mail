@@ -1,6 +1,6 @@
 <div class="mail-option">
   <div class="btn-group">
-    <a {{action (route-action 'starEmail' model)}} href="#" class="btn mini tooltips" aria-expanded="false">
+    <a {{action (route-action "toggleStar" model)}} href="#" class="btn mini tooltips" aria-expanded="false">
       {{#if model.starred}}
         {{fa-icon "star" class="inbox-started"}}
       {{else}}
@@ -10,7 +10,7 @@
   </div>
 
   <div class="btn-group">
-    <a {{action (route-action 'moveToTrash' model)}} href="#" class="btn mini tooltips" aria-expanded="false">
+    <a {{action (route-action "moveToTrash" model)}} href="#" class="btn mini tooltips" aria-expanded="false">
       {{ fa-icon "trash" }}
     </a>
   </div>

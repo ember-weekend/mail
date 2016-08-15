@@ -1,4 +1,4 @@
-{{#if (and (gt model.length 0) (eq currentFolderName 'inbox'))}}
+{{#if (and (gt mail.length 0) (eq folderName 'inbox'))}}
   <div class="mail-option">
     {{#rl-dropdown-container class="btn-group"}}
       {{#rl-dropdown-toggle class="btn btn-default"}}
@@ -8,7 +8,7 @@
 
       {{#rl-dropdown tagName="ul" class="dropdown-menu" closeOnChildClick=true}}
         <li>
-          <a href="#" {{action "trashBulk"}}>{{fa-icon "trash"}} Delete</a>
+          <a href="#" {{action "trashSelected"}}>{{fa-icon "trash"}} Delete</a>
         </li>
       {{/rl-dropdown}}
     {{/rl-dropdown-container}}
@@ -17,23 +17,21 @@
 
 <table class="table table-inbox table-hover">
   <tbody>
-    {{ log (get mailLookup mailLookup.currentFolderName) }}
-    {{ log mailLookup.currentFolderName }}
-    {{#each (get mailLookup mailLookup.currentFolderName) as |email|}}
-    <tr class="{{if email.readDate 'read' 'unread' }}" >
+    {{#each mail as |m|}}
+    <tr class="{{if m.readDate 'read' 'unread' }}" >
         <td class="inbox-small-cells">
-          {{input type="checkbox" checked=email.checked }}
+          {{input type="checkbox" checked=m.checked }}
         </td>
-        <td class="inbox-small-cells" {{action "starEmail" email}}>
-          {{#if email.starred}}
+        <td class="inbox-small-cells" {{action (route-action "toggleStar" m)}}>
+          {{#if m.starred}}
             {{fa-icon "star" class="inbox-started"}}
           {{else}}
             {{fa-icon "star"}}
           {{/if}}
         </td>
-        <td class="view-message dont-show" {{action "showEmail" email}}>{{email.from}}</td>
-        <td class="view-message" {{action "showEmail" email}}>{{email.subject}}</td>
-        <td class="view-message text-right" {{action "showEmail" email}}>{{relative-date-formatter email.sentAt relative=false}}</td>
+        <td class="view-message dont-show" {{action "showEmail" m}}>{{m.from}}</td>
+        <td class="view-message" {{action "showEmail" m}}>{{m.subject}}</td>
+        <td class="view-message text-right" {{action "showEmail" m}}>{{relative-date-formatter m.sentAt relative=false}}</td>
       </tr>
     {{/each}}
   </tbody>

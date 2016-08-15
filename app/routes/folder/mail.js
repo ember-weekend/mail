@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { set, get } = Ember;
+const { set } = Ember;
 
 export default Ember.Route.extend({
   mailLookup: Ember.inject.service(),
@@ -13,14 +13,4 @@ export default Ember.Route.extend({
   serialize(model) {
     return { mailId: model.id };
   },
-  actions:  {
-    moveToTrash(email) {
-      set(email, 'trashedDate', new Date());
-      this.transitionTo('application');
-    },
-    starEmail(email) {
-      set(email, 'starred', !get(email, 'starred'));
-      get(this, 'mailLookup').update();
-    }
-  }
 });

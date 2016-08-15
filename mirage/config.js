@@ -4,9 +4,9 @@ const { get } = Ember;
 
 function getEmailMetaCounts(emails){
   const results = {};
-  results['inbox'] = emails.where(i => !get(i, 'trashedDate'));
-  results['trash'] = emails.where(i => get(i, 'trashedDate'));
-  results['starred'] = emails.where(i => get(i, 'starred'));
+  results['inbox'] = emails.where(i => !get(i, 'tags').contains('trashed'));
+  results['trash'] = emails.where(i => get(i, 'tags').contains('trashed'));
+  results['starred'] = emails.where(i => get(i, 'tags').contains('starred'));
 
   const meta = {
     inboxCount: results['inbox'].models.length,

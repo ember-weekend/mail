@@ -9,8 +9,7 @@ export default function(server) {
     body: 'Dear {{firstName}}, ...',
     sentAt: moment(new Date()).subtract(2, 'minute').toDate(),
     readDate: null,
-    trashedDate: null,
-    starred: null
+    tags: ['starred'],
   });
 
   server.create('email', {
@@ -21,7 +20,6 @@ export default function(server) {
     body: 'Some irrelevant ads',
     sentAt: moment(new Date()).subtract(1, 'day').toDate(),
     readDate: null,
-    trashedDate: null,
-    starred: null
+    tags: ['trashed'],
   });
 }
