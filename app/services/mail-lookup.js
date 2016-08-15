@@ -27,6 +27,7 @@ export default Ember.Service.extend({
       inbox: () => tagging.filterByTags(mail, { exclude: ['trashed', 'sent'] }),
       trash: () => tagging.filterByTags(mail, { include: ['trashed'] }),
       starred: () => tagging.filterByTags(mail, { include: ['starred'] }),
+      sent: () => tagging.filterByTags(mail, { include: ['sent'] }),
     }[folderName]();
   },
 });

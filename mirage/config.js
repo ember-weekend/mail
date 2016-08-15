@@ -16,6 +16,7 @@ function getEmailMetaCounts(mail){
     inbox: filterByTags(mail, { exclude: ['trashed', 'sent'] }),
     trash: filterByTags(mail, { include: ['trashed'] }),
     starred: filterByTags(mail, { include: ['starred'] }),
+    sent: filterByTags(mail, { include: ['sent'] }),
   };
 
   const meta = {
