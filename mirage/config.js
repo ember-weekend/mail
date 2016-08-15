@@ -2,11 +2,21 @@ import Ember from 'ember';
 
 const { get } = Ember;
 
-function getEmailMetaCounts(emails){
-  const results = {};
-  results['inbox'] = emails.where(i => !get(i, 'tags').contains('trashed'));
-  results['trash'] = emails.where(i => get(i, 'tags').contains('trashed'));
-  results['starred'] = emails.where(i => get(i, 'tags').contains('starred'));
+function filterByTags(mail, { include = [], exclude = [] }) {
+  return mail.where((m) => {
+    let passed = include.length === 0 ? true : false;
+    include.forEach((i) => passed = passed || get(m, 'tags').contains(i));
+    exclude.forEach((e) => passed = passed && !get(m, 'tags').contains(e));
+    return passed;
+  });
+}
+
+function getEmailMetaCounts(mail){
+  const results = {
+    inbox: filterByTags(mail, { exclude: ['trashed', 'sent'] }),
+    trash: filterByTags(mail, { include: ['trashed'] }),
+    starred: filterByTags(mail, { include: ['starred'] }),
+  };
 
   const meta = {
     inboxCount: results['inbox'].models.length,
@@ -34,7 +44,21 @@ export default function() {
     return json;
   });
 
-  this.get('/emails', function({emails}, request) {
+  this.post('/emails', function({ emails }) {
+    const attrs = this.normalizedRequestAttrs();
+    attrs.from = 'dev@me.com';
+    attrs.sentAt = new Date();
+    const json = this.serialize(emails.create(attrs));
+    const [meta,] = getEmailMetaCounts(emails);
+
+    // workaround because  `item.save()` returns an item that can't query its
+    // requests' meta information
+    json.data.attributes.meta = meta;
+
+    return json;
+  });
+
+  this.get('/emails', function({ emails }, request) {
     const folderName = request.queryParams.folderName;
 
     const [meta, results] = getEmailMetaCounts(emails);
