@@ -10,7 +10,6 @@ export default DS.Model.extend({
   subject: attr(),
   body: attr(),
   sentAt: attr('date'),
-  readDate: attr('date'),
   meta: attr(),
   tags: attr({ defaultValue: () => [] }),
   starred: Ember.computed('tags.[]', function() {

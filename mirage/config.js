@@ -13,6 +13,7 @@ function filterByTags(mail, { include = [], exclude = [] }) {
 
 function getEmailMetaCounts(mail){
   const results = {
+    inboxUnread: filterByTags(mail, { exclude: ['trashed', 'sent', 'read'] }),
     inbox: filterByTags(mail, { exclude: ['trashed', 'sent'] }),
     trash: filterByTags(mail, { include: ['trashed'] }),
     starred: filterByTags(mail, { include: ['starred'] }),
@@ -20,7 +21,7 @@ function getEmailMetaCounts(mail){
   };
 
   const meta = {
-    inboxCount: results['inbox'].models.length,
+    inboxCount: results['inboxUnread'].models.length,
     trashCount: results['trash'].models.length,
     starredCount: results['starred'].models.length
   };

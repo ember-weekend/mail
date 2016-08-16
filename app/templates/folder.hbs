@@ -9,33 +9,34 @@
         </a>
       </div>
       <ul class="inbox-nav inbox-divider">
-        {{#link-to 'folder' 'inbox' tagName="li"}}
-          {{#link-to 'folder' 'inbox'}}
-            {{fa-icon "inbox"}}
-            Inbox {{#if inboxCount}}({{inboxCount}}){{/if}}
-          {{/link-to}}
-        {{/link-to}}
+        {{nav-item
+          path='inbox'
+          title='Inbox'
+          count=inboxCount
+          type='info'
+        }}
 
-        {{#link-to 'folder' 'trash' tagName="li"}}
-          {{#link-to 'folder' 'trash'}}
-            {{fa-icon "trash"}}
-            Trash {{#if trashCount}}({{trashCount}}){{/if}}
-          {{/link-to}}
-        {{/link-to}}
+        {{nav-item
+          path='trash'
+          title='Trash'
+          count=trashCount
+          type='danger'
+        }}
 
-        {{#link-to 'folder' 'starred' tagName="li"}}
-          {{#link-to 'folder' 'starred'}}
-            {{fa-icon "star"}}
-            Starred {{#if starredCount}}({{starredCount}}){{/if}}
-          {{/link-to}}
-        {{/link-to}}
+        {{nav-item
+          path='starred'
+          icon='star'
+          title='Starred'
+          count=starredCount
+          type='info'
+        }}
 
-        {{#link-to 'folder' 'sent' tagName="li"}}
-          {{#link-to 'folder' 'sent'}}
-            {{fa-icon "paper-plane"}}
-            Sent
-          {{/link-to}}
-        {{/link-to}}
+        {{nav-item
+          path='sent'
+          icon='paper-plane'
+          title='Sent'
+          type='info'
+        }}
       </ul>
     </aside>
     <aside class="lg-side">

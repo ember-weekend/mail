@@ -1,0 +1,9 @@
+{{#link-to 'folder' path tagName="li"}}
+  {{#link-to 'folder' path }}
+    {{fa-icon (or icon path)}}
+    {{title}}
+    {{#if count}}
+      <span class="label label-{{type}} pull-right">{{count}}</span>
+    {{/if}}
+  {{/link-to}}
+{{/link-to}}
